@@ -1,0 +1,134 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  width: 80%;
+  margin: auto;
+}
+
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+}
+
+.a-logo {
+  margin-right: 150px;
+  cursor: pointer;
+}
+
+.navigation a {
+  padding: 0 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  padding-bottom: 29px;
+}
+
+.cart-container {
+  cursor: pointer;
+}
+
+.selected {
+  color: #5ece7b;
+  border-bottom: 2px solid #5ece7b;
+}
+
+.action {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 50px;
+}
+
+.currency {
+  width: 12px;
+  height: 29px;
+  display: flex;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 160%;
+}
+
+.arrow {
+  position: relative;
+  top: 5px;
+  left: 8px;
+  cursor: pointer;
+}
+
+.cart {
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: block;
+  position: absolute;
+  right: 0;
+  background-color: #f9f9f9;
+  min-width: 100px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: -40px;
+}
+
+.dropdown-content button {
+  color: black;
+  font-weight: 300;
+  font-size: 15px;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dropdown-content button span {
+  margin-right: 8px;
+}
+
+button {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dot {
+  font-size: 10px;
+  font-family: "Raleway";
+  font-style: normal;
+  height: 15px;
+  position: relative;
+  width: 15px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 50%;
+  display: inline-block;
+  top: -13px;
+  left: -6px;
+}
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: inline-block;
+}
