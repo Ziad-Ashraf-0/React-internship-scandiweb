@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { graphql } from "@apollo/client/react/hoc";
-import { gql } from "@apollo/client";
+import { getProducts, getCurrencies } from "./query/queries.js";
 import { flowRight as compose } from "lodash";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar.js";
@@ -9,13 +9,8 @@ import Product from "./routes/Product/Product.js";
 import CartPage from "./routes/Cart/CartPage.js";
 import "./App.css";
 
-const arrayEquals = (a, b) => {
-  return (
-    Array.isArray(a) &&
-    Array.isArray(b) &&
-    a.length === b.length &&
-    a.every((val, index) => val === b[index])
-  );
+const arrayEquals = (array1, array2) => {
+  return JSON.stringify(array1) === JSON.stringify(array2);
 };
 
 class App extends Component {
@@ -30,6 +25,35 @@ class App extends Component {
     };
     this.handleAddToCart.bind(this);
     this.handleChangeCurrency.bind(this);
+  }
+
+  componentDidMount() {
+    if (JSON.parse(window.sessionStorage.getItem("itemsCount"))) {
+      this.setState(
+        {
+          itemsCount: JSON.parse(sessionStorage.getItem("itemsCount")),
+          cartItems: JSON.parse(sessionStorage.getItem("cartItems")),
+          total: JSON.parse(sessionStorage.getItem("total")),
+          selectedCurrency: sessionStorage.getItem("selectedCurrency"),
+        },
+        () => console.log(this.state.total)
+      );
+    }
+  }
+
+  componentDidUpdate(prevState) {
+    if (this.state.itemsCount !== prevState.itemsCount) {
+      window.sessionStorage.setItem("itemsCount", this.state.itemsCount);
+      window.sessionStorage.setItem(
+        "cartItems",
+        JSON.stringify(this.state.cartItems)
+      );
+      window.sessionStorage.setItem("total", this.state.total);
+      window.sessionStorage.setItem(
+        "selectedCurrency",
+        this.state.selectedCurrency
+      );
+    }
   }
 
   handleChangeCurrency = (currency) => {
@@ -61,7 +85,6 @@ class App extends Component {
   };
 
   handleAddToCart = (product) => {
-    console.log(product);
     if (
       this.state.cartItems.some(
         (e) =>
@@ -70,6 +93,9 @@ class App extends Component {
       )
     ) {
       const temp = this.state.cartItems.map((item) => {
+        console.log(
+          arrayEquals(item.selectedAttributes, product.selectedAttributes)
+        );
         if (
           item.id === product.id &&
           arrayEquals(item.selectedAttributes, product.selectedAttributes)
@@ -101,9 +127,7 @@ class App extends Component {
     }
   };
 
-  handleGreyOut = (value) => {
-    console.log(value);
-
+  handleGreyOut = () => {
     this.setState({
       greyout: !this.state.greyout,
     });
@@ -179,7 +203,6 @@ class App extends Component {
         acc.push(...item.products);
         return acc;
       }, []);
-
     return (
       <>
         <div className={this.state.greyout ? "greyout" : ""}></div>
@@ -266,50 +289,10 @@ class App extends Component {
 }
 
 export default compose(
-  graphql(
-    gql`
-      query MyQuery1 {
-        categories {
-          name
-          products {
-            id
-            name
-            inStock
-            gallery
-            category
-            attributes {
-              id
-              name
-              type
-              items {
-                displayValue
-                value
-                id
-              }
-            }
-            prices {
-              currency {
-                label
-                symbol
-              }
-              amount
-            }
-            brand
-          }
-        }
-      }
-    `,
-    { name: "data" }
-  ),
-  graphql(
-    gql`
-      query MyQuery2 {
-        currencies {
-          label
-          symbol
-        }
-      }
-    `,
-    { name: "data1" }
-  )
+  graphql(getProducts, {
+    options: () => ({
+      fetchPolicy: "no-cache",
+    }),
+  }),
+  graphql(getCurrencies, { name: "data1" })
 )(App);

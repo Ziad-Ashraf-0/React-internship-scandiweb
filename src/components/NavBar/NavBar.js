@@ -21,6 +21,7 @@ export default class NavBar extends Component {
   }
 
   componentDidMount() {
+    this.setState({ currency: this.props.selectedCurrency });
     document.addEventListener("mousedown", this.handleClickOutside);
   }
 
@@ -29,6 +30,7 @@ export default class NavBar extends Component {
   }
 
   handleGreyOut = () => {
+    console.log("a");
     this.props.handleGreyOut();
   };
 

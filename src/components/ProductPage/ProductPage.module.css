@@ -33,6 +33,8 @@
 
 .cover {
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 .cover__image {
@@ -74,20 +76,40 @@
 
 .attributes {
   margin-bottom: 40px;
+  display: flex;
 }
 
+.buttonContainer {
+  margin: 5px;
+  padding: 2px;
+}
+
+.buttonContainerImg {
+  margin: 5px;
+  padding: 2px;
+  border: 1px solid #5ece7b;
+}
 .radio {
   min-width: 63px;
   height: 45px;
   padding: 13px;
   border: 1px solid #1d1f22;
-
   color: #292929;
   background-color: #ffffff;
+  font-family: Source Sans Pro, sans-serif;
+  font-weight: 400;
+  opacity: 1;
+  transition: opacity 250ms linear;
+  cursor: pointer;
+}
+
+.radioImg {
+  min-width: 40px;
+  height: 40px;
+  padding: 13px;
 
   font-family: Source Sans Pro, sans-serif;
   font-weight: 400;
-
   opacity: 1;
   transition: opacity 250ms linear;
   cursor: pointer;
@@ -97,13 +119,22 @@
   min-width: 63px;
   height: 45px;
   padding: 13px;
-  border: 1px solid #1d1f22;
-
   background-color: #292929;
   color: #ffffff;
   font-family: Source Sans Pro, sans-serif;
   font-weight: 400;
 
+  opacity: 1;
+  transition: opacity 250ms linear;
+  cursor: pointer;
+}
+.radioSelectedImg {
+  min-width: 40px;
+  height: 40px;
+  padding: 13px;
+
+  font-family: Source Sans Pro, sans-serif;
+  font-weight: 400;
   opacity: 1;
   transition: opacity 250ms linear;
   cursor: pointer;
@@ -118,11 +149,9 @@
 }
 
 .radio:nth-child(-n + 3) {
-  margin-bottom: 12px;
 }
 
 .radioSelected:nth-child(-n + 3) {
-  margin-bottom: 12px;
 }
 
 .radio:hover {

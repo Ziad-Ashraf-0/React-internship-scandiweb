@@ -20,7 +20,7 @@ export default class Item extends Component {
         value: attribute.items[0].value,
       };
     });
-    console.log(temp);
+    console.log({ ...value, selectedAttributes: temp });
     this.props.handleAddToCart({ ...value, selectedAttributes: temp });
   };
 

@@ -97,26 +97,42 @@ export default class ProductPage extends Component {
                     <div className={styles.attributes}>
                       {attributes.items.map((item) => {
                         return (
-                          <button
-                            type="button"
+                          <div
+                            key={item.id}
                             className={
                               this.state.attributes.some(
                                 (e) =>
                                   e.value === item.value &&
                                   e.id === attributes.id
-                              )
-                                ? styles.radioSelected
-                                : styles.radio
+                              ) && attributes.id === "Color"
+                                ? styles.buttonContainerImg
+                                : styles.buttonContainer
                             }
-                            key={item.id}
-                            onClick={() =>
-                              this.handleAttributes(attributes.id, item)
-                            }
-                            style={{ backgroundColor: `${item.value}` }}
-                            title={item.displayValue}
                           >
-                            {attributes.id === "Color" ? "" : item.value}
-                          </button>
+                            <button
+                              type="button"
+                              className={
+                                this.state.attributes.some(
+                                  (e) =>
+                                    e.value === item.value &&
+                                    e.id === attributes.id
+                                )
+                                  ? attributes.id === "Color"
+                                    ? styles.radioSelectedImg
+                                    : styles.radioSelected
+                                  : attributes.id === "Color"
+                                  ? styles.radioImg
+                                  : styles.radio
+                              }
+                              onClick={() =>
+                                this.handleAttributes(attributes.id, item)
+                              }
+                              style={{ backgroundColor: `${item.value}` }}
+                              title={item.displayValue}
+                            >
+                              {attributes.id === "Color" ? "" : item.value}
+                            </button>
+                          </div>
                         );
                       })}
                     </div>

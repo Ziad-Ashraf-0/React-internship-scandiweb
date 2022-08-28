@@ -1,10 +1,20 @@
 import React, { Component, createRef } from "react";
 import { Link } from "react-router-dom";
+import Pagination from "../Pagination/Pagination.js";
 
 import styles from "./CartPreview.module.css";
 
 export default class CartPreview extends Component {
   container = createRef();
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      condition: true,
+      currentPage: 1,
+      itemsPerPage: 2,
+    };
+  }
 
   componentDidMount() {
     document.addEventListener("click", this.handleClickOutside);
@@ -26,9 +36,12 @@ export default class CartPreview extends Component {
     if (
       this.container.current &&
       !this.container.current.contains(e.target) &&
-      !e.path[1].classList.contains("cart-container")
+      !e.path[1].classList.contains("cart-container") &&
+      this.state.condition
     ) {
       this.props.handleGreyOut();
+    } else {
+      this.setState({ condition: true });
     }
   };
 
@@ -37,6 +50,7 @@ export default class CartPreview extends Component {
   };
 
   decrement = (product) => {
+    this.setState({ condition: false });
     this.props.handleDecrement(product);
   };
 
@@ -44,20 +58,31 @@ export default class CartPreview extends Component {
     this.props.handleGreyOut();
   };
 
+  handlePagination = (value) => {
+    this.setState({ currentPage: value });
+  };
+
   render() {
     const products = this.props.cartItems;
+    const indexOfLastItem = this.state.currentPage * this.state.itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - this.state.itemsPerPage;
+    const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
 
     return (
       <>
         {this.props.greyout && (
-          <div className={styles.backdrop} onClick={this.handleClickBackdrop}>
-            <div className={styles.modal} ref={this.container}>
+          <div
+            className={styles.backdrop}
+            ref={this.container}
+            onClick={this.handleClickBackdrop}
+          >
+            <div className={styles.modal}>
               <p className={styles.title}>
                 <span className={styles.title__name}>My Bag</span>,{" "}
                 {this.props.itemsCount} items
               </p>
 
-              {products.map((product, index) => {
+              {currentItems.map((product, index) => {
                 const price = product.prices.filter(
                   (price) =>
                     price.currency.symbol === this.props.selectedCurrency
@@ -84,31 +109,45 @@ export default class CartPreview extends Component {
                                 <div className={styles.attributes}>
                                   {attributes.items.map((item) => {
                                     return (
-                                      <button
-                                        type="button"
+                                      <div
                                         key={item.id}
                                         className={
                                           product.selectedAttributes.some(
                                             (e) =>
                                               e.value === item.value &&
                                               e.id === attributes.id
-                                          )
-                                            ? attributes.id === "Color"
-                                              ? styles.radioSelectedImg
-                                              : styles.radioSelected
-                                            : styles.radio
+                                          ) && attributes.id === "Color"
+                                            ? styles.buttonContainerImg
+                                            : styles.buttonContainer
                                         }
-                                        title={item.displayValue}
-                                        style={{
-                                          backgroundColor: `${item.value}`,
-                                        }}
                                       >
-                                        <p className={styles.align}>
-                                          {attributes.id === "Color"
-                                            ? ""
-                                            : item.value}
-                                        </p>
-                                      </button>
+                                        <button
+                                          type="button"
+                                          className={
+                                            product.selectedAttributes.some(
+                                              (e) =>
+                                                e.value === item.value &&
+                                                e.id === attributes.id
+                                            )
+                                              ? attributes.id === "Color"
+                                                ? styles.radioSelectedImg
+                                                : styles.radioSelected
+                                              : attributes.id === "Color"
+                                              ? styles.radioImg
+                                              : styles.radio
+                                          }
+                                          title={item.displayValue}
+                                          style={{
+                                            backgroundColor: `${item.value}`,
+                                          }}
+                                        >
+                                          <p className={styles.align}>
+                                            {attributes.id === "Color"
+                                              ? ""
+                                              : item.value}
+                                          </p>
+                                        </button>
+                                      </div>
                                     );
                                   })}
                                 </div>
@@ -151,11 +190,19 @@ export default class CartPreview extends Component {
                 );
               })}
 
+              {products.length > 2 && (
+                <Pagination
+                  ItemsPerPage={this.state.itemsPerPage}
+                  totalItems={products.length}
+                  handlePagination={this.handlePagination}
+                />
+              )}
+
               <div className={styles.total}>
                 <span className={styles.total__text}>Total</span>
-                <span
-                  className={styles.total__price}
-                >{`${this.props.selectedCurrency} ${this.props.total}`}</span>
+                <span className={styles.total__price}>{`${
+                  this.props.selectedCurrency
+                } ${this.props.total.toFixed(2)}`}</span>
               </div>
 
               <div className={styles.buttons}>

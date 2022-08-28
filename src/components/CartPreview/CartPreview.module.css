@@ -205,15 +205,12 @@
   position: absolute;
   top: 10px;
   right: 16px;
-
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px;
-
   background-color: transparent;
   border: none;
-
   transform: scale(1);
   transition: all 250ms linear;
   cursor: pointer;
@@ -239,50 +236,51 @@
 .attributes {
   margin: 5px 0px;
   display: inline-grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 3fr;
-  grid-column-gap: 5px;
-  grid-row-gap: 5px;
 }
 
 .radio {
-  min-width: 50px;
-  height: 20px;
+  min-width: 30px;
+  height: 30px;
   border: 1px solid #1d1f22;
   color: #292929;
   background-color: #ffffff;
-
-  font-size: 12px;
   font-family: Source Sans Pro, sans-serif;
   font-weight: 400;
+}
 
-  opacity: 1;
-  transition: opacity 250ms linear;
-  cursor: pointer;
+.radioImg {
+  width: 20px;
+  height: 20px;
 }
 
 .radioSelected {
-  min-width: 50px;
-
-  height: 20px;
-  border: 1px solid #1d1f22;
+  min-width: 30px;
+  height: 30px;
   background-color: #292929;
   color: #ffffff;
   font-family: Source Sans Pro, sans-serif;
   font-weight: 400;
-  opacity: 1;
-  transition: opacity 250ms linear;
-  cursor: pointer;
+}
+.radioSelectedImg {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 20px;
+  height: 20px;
 }
 
-.radioSelectedImg {
-  border: 3px solid #7af19a;
-  min-width: 50px;
-  height: 20px;
-  color: #ffffff;
-  font-family: Source Sans Pro, sans-serif;
-  font-weight: 400;
-  opacity: 1;
-  transition: opacity 250ms linear;
-  cursor: pointer;
+.buttonContainer {
+  margin: 3px;
+  padding: 2px;
+  display: flex;
+}
+
+.buttonContainerImg {
+  position: relative;
+  margin: 3px;
+  padding: 2px;
+  border: 1px solid #5ece7b;
+  display: flex;
 }

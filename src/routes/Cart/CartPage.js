@@ -3,13 +3,8 @@ import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 
 import styles from "./CartPage.module.css";
 
-const arrayEquals = (a, b) => {
-  return (
-    Array.isArray(a) &&
-    Array.isArray(b) &&
-    a.length === b.length &&
-    a.every((val, index) => val === b[index])
-  );
+const arrayEquals = (array1, array2) => {
+  return JSON.stringify(array1) === JSON.stringify(array2);
 };
 
 export default class CartPage extends Component {
