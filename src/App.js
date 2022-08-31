@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { graphql } from "@apollo/client/react/hoc";
-import { getProducts, getCurrencies } from "./query/queries.js";
+import { getAllProducts, getCurrencies } from "./query/queries.js";
 import { flowRight as compose } from "lodash";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar.js";
@@ -289,7 +289,7 @@ class App extends Component {
 }
 
 export default compose(
-  graphql(getProducts, {
+  graphql(getAllProducts, {
     options: () => ({
       fetchPolicy: "no-cache",
     }),

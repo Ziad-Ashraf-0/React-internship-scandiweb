@@ -31,7 +31,7 @@ const getProduct = gql`
   }
 `;
 
-const getProducts = gql`
+const getAllProducts = gql`
   query MyQuery1 {
     categories {
       name
@@ -73,4 +73,37 @@ const getCurrencies = gql`
   }
 `;
 
-export { getProduct, getProducts, getCurrencies };
+const getCategory = gql`
+  query getCategory($name: String!) {
+    category(input: { title: $name }) {
+      name
+      products {
+        id
+        name
+        inStock
+        gallery
+        category
+        attributes {
+          id
+          name
+          type
+          items {
+            displayValue
+            value
+            id
+          }
+        }
+        prices {
+          currency {
+            label
+            symbol
+          }
+          amount
+        }
+        brand
+      }
+    }
+  }
+`;
+
+export { getProduct, getAllProducts, getCurrencies };

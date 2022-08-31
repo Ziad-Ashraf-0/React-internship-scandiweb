@@ -7,13 +7,19 @@
   margin-right: 100px;
 }
 
+.gallery__thumbs::-webkit-scrollbar {
+  width: 3px;
+}
+
 .gallery__thumbs {
+  max-height: 600px;
+  overflow: auto;
+  overflow-x: hidden;
   margin-right: 40px;
 }
 
 .gallery__thumb {
   border: 2px solid transparent;
-
   opacity: 1;
   transition: all 250ms linear;
   cursor: pointer;
@@ -22,7 +28,6 @@
 .gallery__thumb:hover,
 .gallery__thumb:focus {
   border: 2px solid #5ece7b;
-
   opacity: 0.6;
   transition: all 250ms linear;
 }

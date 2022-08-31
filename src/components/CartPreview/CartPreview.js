@@ -52,6 +52,15 @@ export default class CartPreview extends Component {
   decrement = (product) => {
     this.setState({ condition: false });
     this.props.handleDecrement(product);
+    console.log(this.props.cartItems.length);
+    if (
+      this.props.cartItems.length - 1 === (this.state.currentPage - 1) * 2 &&
+      this.state.currentPage !== 1
+    ) {
+      this.setState({
+        currentPage: this.state.currentPage - 1,
+      });
+    }
   };
 
   handleCartClick = () => {
@@ -79,7 +88,8 @@ export default class CartPreview extends Component {
             <div className={styles.modal}>
               <p className={styles.title}>
                 <span className={styles.title__name}>My Bag</span>,{" "}
-                {this.props.itemsCount} items
+                {this.props.itemsCount}{" "}
+                {this.props.itemsCount === 1 ? "item" : "items"}
               </p>
 
               {currentItems.map((product, index) => {

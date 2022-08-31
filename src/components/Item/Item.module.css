@@ -72,8 +72,13 @@
 }
 
 .item__title {
-  font-weight: 300;
+  font-weight: 500;
   font-size: 20px;
+}
+
+.item__brand {
+  font-weight: 300;
+  font-size: 17px;
 }
 
 .item__price {
