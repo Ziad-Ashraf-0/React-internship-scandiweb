@@ -124,9 +124,9 @@ export default class ProductPage extends Component {
         <p className={styles.subtitle}>
           {product.inStock ? "price" : "last price"}:
         </p>
-        <p
-          className={styles.price}
-        >{`${price[0].currency.symbol} ${price[0].amount}`}</p>
+        <p className={styles.price}>{`${
+          price[0].currency.symbol
+        } ${price[0].amount.toFixed(2)}`}</p>
       </>
     );
   }
@@ -200,8 +200,8 @@ export default class ProductPage extends Component {
       <article className={styles.product}>
         {this.renderGallery()}
         <aside className={styles.sidebar}>
-          <h1 className={styles.title}>{product.name}</h1>
-          <h2 className={styles.brand}>{product.brand}</h2>
+          <h1 className={styles.title}>{product.brand}</h1>
+          <h2 className={styles.brand}>{product.name}</h2>
           {this.renderAttributes()}
           {this.renderPrice()}
           {this.renderAddToCart()}

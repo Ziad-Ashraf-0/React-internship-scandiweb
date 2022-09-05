@@ -44,8 +44,10 @@ export default class Item extends Component {
     );
     return (
       <div className={styles.item__content}>
-        <h2 className={styles.item__title}>{product.name}</h2>
-        <h2 className={styles.item__brand}>{product.brand}</h2>
+        <h2 className={styles.item__title}>
+          {`${product.brand} ${product.name} `}
+        </h2>
+
         <p className={styles.item__price}>{`${
           price[0].currency.symbol
         } ${price[0].amount.toFixed(2)}`}</p>
