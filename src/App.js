@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { graphql } from "@apollo/client/react/hoc";
-import { getAllProducts, getCurrencies } from "./query/queries.js";
+import { getCategories, getCurrencies } from "./query/queries.js";
 import { flowRight as compose } from "lodash";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar.js";
@@ -197,12 +197,12 @@ class App extends Component {
 
   render() {
     const { data } = this.props;
-    const all = data?.categories
-      ?.filter(({ name }) => name === "all")
-      .reduce((acc, item) => {
-        acc.push(...item.products);
-        return acc;
-      }, []);
+    // const all = data?.categories
+    //  ?.filter(({ name }) => name === "all")
+    //  .reduce((acc, item) => {
+    //    acc.push(...item.products);
+    //    return acc;
+    //  }, []);
     return (
       <>
         <div className={this.state.greyout ? "greyout" : ""}></div>
@@ -227,7 +227,7 @@ class App extends Component {
                 path="/"
                 element={
                   <Category
-                    products={all}
+                    name={""}
                     handleAddToCart={this.handleAddToCart}
                     selectedCurrency={this.state.selectedCurrency}
                   />
@@ -241,7 +241,6 @@ class App extends Component {
                     key={category.name}
                     element={
                       <Category
-                        products={category.products}
                         name={category.name}
                         handleAddToCart={this.handleAddToCart}
                         selectedCurrency={this.state.selectedCurrency}
@@ -289,10 +288,6 @@ class App extends Component {
 }
 
 export default compose(
-  graphql(getAllProducts, {
-    options: () => ({
-      fetchPolicy: "no-cache",
-    }),
-  }),
+  graphql(getCategories),
   graphql(getCurrencies, { name: "data1" })
 )(App);

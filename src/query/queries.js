@@ -73,6 +73,14 @@ const getCurrencies = gql`
   }
 `;
 
+const getCategories = gql`
+  query getCategories {
+    categories {
+      name
+    }
+  }
+`;
+
 const getCategory = gql`
   query getCategory($name: String!) {
     category(input: { title: $name }) {
@@ -106,4 +114,10 @@ const getCategory = gql`
   }
 `;
 
-export { getProduct, getAllProducts, getCurrencies };
+export {
+  getProduct,
+  getAllProducts,
+  getCurrencies,
+  getCategory,
+  getCategories,
+};

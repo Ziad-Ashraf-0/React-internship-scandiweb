@@ -62,78 +62,85 @@ export default class NavBar extends Component {
     });
   };
 
+  renderCurrencyDropdown() {
+    return (
+      <div className="currency">
+        <span>{this.state.currency}</span>
+        <div className="dropdown">
+          <button className="arrow" onClick={this.handleDropdown}>
+            {this.state.currencyDropdown ? (
+              <RiArrowUpSLine />
+            ) : (
+              <RiArrowDownSLine />
+            )}
+          </button>
+          {this.state.currencyDropdown && (
+            <div className="dropdown-content">
+              {this.state.currencies.map((value, index) => {
+                return (
+                  <button key={index}>
+                    <span className="sm">{value.symbol}</span>
+                    {` ${value.label}`}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  renderCart() {
+    return (
+      <div className="cart">
+        <div className="cart-container" onClick={this.handleGreyOut}>
+          <BsCart2 />
+          <div
+            className={`dot + ${this.props.itemsCount > 0 ? "show" : "hidden"}`}
+          >
+            {this.props.itemsCount > 0 ? this.props.itemsCount : ""}
+          </div>
+        </div>
+
+        <CartPreview
+          handleGreyOut={this.handleGreyOut}
+          greyout={this.props.greyout}
+          selectedCurrency={this.props.selectedCurrency}
+          cartItems={this.props.cartItems}
+          itemsCount={this.props.itemsCount}
+          total={this.props.total}
+          handleIncrement={this.props.handleIncrement}
+          handleDecrement={this.props.handleDecrement}
+        />
+      </div>
+    );
+  }
+
+  renderCategories() {
+    return this.state.categories.map((value, index) => {
+      return (
+        <Link
+          to={`/${value.name}`}
+          key={index}
+          className={index === this.state.activeCategory ? "selected" : ""}
+          onClick={() => this.changeActiveCategory(index)}
+        >
+          {value.name}
+        </Link>
+      );
+    });
+  }
+
   render() {
     return (
       <>
         <header>
-          <div className="navigation">
-            <div className="overlay"></div>
-            {this.state.categories.map((value, index) => {
-              return (
-                <Link
-                  to={`/${value.name}`}
-                  key={index}
-                  className={
-                    index === this.state.activeCategory ? "selected" : ""
-                  }
-                  onClick={() => this.changeActiveCategory(index)}
-                >
-                  {value.name}
-                </Link>
-              );
-            })}
-          </div>
-
+          <div className="navigation">{this.renderCategories()}</div>
           <img src={alogo} alt="#" className="a-logo" />
-
           <div className="action">
-            <div className="currency">
-              <span>{this.state.currency}</span>
-              <div className="dropdown">
-                <button className="arrow" onClick={this.handleDropdown}>
-                  {this.state.currencyDropdown ? (
-                    <RiArrowUpSLine />
-                  ) : (
-                    <RiArrowDownSLine />
-                  )}
-                </button>
-                {this.state.currencyDropdown && (
-                  <div className="dropdown-content">
-                    {this.state.currencies.map((value, index) => {
-                      return (
-                        <button key={index}>
-                          <span className="sm">{value.symbol}</span>
-                          {` ${value.label}`}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="cart">
-              <div className="cart-container" onClick={this.handleGreyOut}>
-                <BsCart2 />
-                <div
-                  className={`dot + ${
-                    this.props.itemsCount > 0 ? "show" : "hidden"
-                  }`}
-                >
-                  {this.props.itemsCount > 0 ? this.props.itemsCount : ""}
-                </div>
-              </div>
-
-              <CartPreview
-                handleGreyOut={this.handleGreyOut}
-                greyout={this.props.greyout}
-                selectedCurrency={this.props.selectedCurrency}
-                cartItems={this.props.cartItems}
-                itemsCount={this.props.itemsCount}
-                total={this.props.total}
-                handleIncrement={this.props.handleIncrement}
-                handleDecrement={this.props.handleDecrement}
-              />
-            </div>
+            {this.renderCurrencyDropdown()}
+            {this.renderCart()}
           </div>
         </header>
       </>

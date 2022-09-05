@@ -1,14 +1,18 @@
 import React, { Component } from "react";
+import { graphql } from "@apollo/client/react/hoc";
+import { getCategory } from "../../query/queries.js";
 import styles from "./Category.module.css";
 import ProductsList from "../../components/ProductList/ProductsList.js";
 
-export default class Category extends Component {
+class Category extends Component {
   componentDidMount() {
     document.title = "Category";
   }
 
   render() {
-    const products = this.props.products;
+    console.log(this.props);
+    const { data } = this.props;
+
     const categoryName = this.props.name;
     return (
       <main>
@@ -19,9 +23,9 @@ export default class Category extends Component {
             <h1 className={styles.title}>{"all"}</h1>
           )}
 
-          {products && (
+          {data.category && (
             <ProductsList
-              products={products}
+              products={data.category.products}
               category={categoryName}
               handleAddToCart={this.props.handleAddToCart}
               selectedCurrency={this.props.selectedCurrency}
@@ -32,3 +36,12 @@ export default class Category extends Component {
     );
   }
 }
+
+export default graphql(getCategory, {
+  options: (props) => ({
+    variables: {
+      name: props.name,
+    },
+    fetchPolicy: "network-only",
+  }),
+})(Category);

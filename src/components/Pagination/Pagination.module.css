@@ -7,20 +7,29 @@
 }
 
 .pageLink {
-  width: 20px;
-  height: 20px;
-  border: 1px solid #1d1f22;
+  width: 30px;
+  height: 30px;
+  color: black;
   background-color: #ffffff;
   opacity: 1;
   transition: opacity 250ms linear;
   cursor: pointer;
 }
 
-.pageLink:active {
+.active {
+  background-color: #5ece7b;
+  width: 30px;
+  height: 30px;
   color: #ffffff;
-  background-color: #1d1f22;
+  opacity: 1;
+  transition: opacity 250ms linear;
+  cursor: pointer;
 }
 
 span {
   cursor: pointer;
+}
+
+.pageLink:hover:not(.active) {
+  background-color: #ddd;
 }

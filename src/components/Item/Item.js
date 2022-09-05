@@ -24,13 +24,49 @@ export default class Item extends Component {
     this.props.handleAddToCart({ ...value, selectedAttributes: temp });
   };
 
-  render() {
-    const product = this.props.product;
-    const categoryName = this.props.category;
+  renderAddToCart(product) {
+    return (
+      <button
+        type="button"
+        className={styles.item__cart}
+        onClick={() => this.handleClick(product)}
+        title="Add to cart"
+        alt="Add to cart"
+      >
+        <EmpryCart />
+      </button>
+    );
+  }
 
+  renderItemContent(product) {
     const price = product.prices.filter(
       (price) => price.currency.symbol === this.props.selectedCurrency
     );
+    return (
+      <div className={styles.item__content}>
+        <h2 className={styles.item__title}>{product.name}</h2>
+        <h2 className={styles.item__brand}>{product.brand}</h2>
+        <p className={styles.item__price}>{`${
+          price[0].currency.symbol
+        } ${price[0].amount.toFixed(2)}`}</p>
+      </div>
+    );
+  }
+
+  renderThumb(product) {
+    return (
+      <img
+        src={product.gallery[0]}
+        className={styles.item__image}
+        title={product.name}
+        alt={product.name}
+      />
+    );
+  }
+
+  render() {
+    const product = this.props.product;
+    const categoryName = this.props.category;
 
     const stockStatus = product.inStock
       ? styles.item
@@ -47,38 +83,15 @@ export default class Item extends Component {
         >
           <article>
             <div className={styles.item__thumb}>
-              <img
-                src={product.gallery[0]}
-                className={styles.item__image}
-                title={product.name}
-                alt={product.name}
-              />
+              {this.renderThumb(product)}
             </div>
-
+            {this.renderItemContent(product)}
             {!product.inStock && (
               <p className={styles.item__out}>Out of stock</p>
             )}
-
-            <div className={styles.item__content}>
-              <h2 className={styles.item__title}>{product.name}</h2>
-              <h2 className={styles.item__brand}>{product.brand}</h2>
-              <p
-                className={styles.item__price}
-              >{`${price[0].currency.symbol} ${price[0].amount}`}</p>
-            </div>
           </article>
         </Link>
-        {product.inStock && (
-          <button
-            type="button"
-            className={styles.item__cart}
-            onClick={() => this.handleClick(product)}
-            title="Add to cart"
-            alt="Add to cart"
-          >
-            <EmpryCart />
-          </button>
-        )}
+        {product.inStock && this.renderAddToCart(product)}
       </li>
     );
   }
