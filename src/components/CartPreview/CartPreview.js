@@ -250,7 +250,8 @@ export default class CartPreview extends Component {
                 return (
                   <div className={styles.product__wrapper} key={index}>
                     <div className={styles.product__content}>
-                      <p className={styles.product__name}>{product.name}</p>
+                      <p>{product.brand}</p>
+                      <p>{product.name}</p>
                       {this.renderPrice(product)}
                       {this.renderAttributes(product)}
                     </div>

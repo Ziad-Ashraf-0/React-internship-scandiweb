@@ -207,8 +207,8 @@ export default class CartPage extends Component {
               return (
                 <li className={styles.item} key={product.id}>
                   <div className={styles.product}>
-                    <p className={styles.product__name}>{product.name}</p>
-                    <p className={styles.product__brand}>{product.brand}</p>
+                    <p className={styles.product__name}>{product.brand}</p>
+                    <p className={styles.product__brand}>{product.name}</p>
                     {this.renderPrice(product)}
 
                     {product.attributes.length
